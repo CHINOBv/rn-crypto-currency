@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TouchableHighlight, Alert} from 'react-native';
 
 import {Picker} from '@react-native-picker/picker';
 import Axios from 'axios';
@@ -24,13 +24,26 @@ const Form = () => {
     fetchAPI();
   }, []);
 
+  const quotizateCurrency = () => {
+    //Validate The Fields
+    if (!Crypto.trim() || !Currency.trim()) {
+      Alert.alert(
+        'Error',
+        'No se Permiten Campos Vacios, Porfavor Selecciona un Valor',
+        [{text: 'OK'}],
+      );
+      return;
+    }
+  };
+
   return (
     <>
       <View>
         <Text style={styles.label}>Moneda</Text>
         <Picker
           onValueChange={(currency) => getCurrency(currency)}
-          selectedValue={Currency}>
+          selectedValue={Currency}
+          itemStyle={{height: 120}}>
           <Picker.Item label="- Selecciona -" value="" />
           <Picker.Item label="USD" value="USD" />
           <Picker.Item label="MXN" value="MXN" />
@@ -38,6 +51,24 @@ const Form = () => {
           <Picker.Item label="GBP" value="GBP" />
         </Picker>
         <Text style={styles.label}>Crypto Moneda</Text>
+        <Picker
+          selectedValue={Crypto}
+          onValueChange={(crypto) => setCrypto(crypto)}
+          itemStyle={{height: 120}}>
+          <Picker.Item label="- Selecciona -" value="" />
+          {Cryptos.map((crypto) => (
+            <Picker.Item
+              key={crypto.CoinInfo.Id}
+              label={crypto.CoinInfo.FullName}
+              value={crypto.CoinInfo.Internal}
+            />
+          ))}
+        </Picker>
+        <TouchableHighlight
+          style={styles.btnQuotizate}
+          onPress={() => quotizateCurrency()}>
+          <Text style={styles.txtQuotizate}>Cotizar</Text>
+        </TouchableHighlight>
       </View>
     </>
   );
@@ -49,6 +80,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Black',
     textTransform: 'uppercase',
     marginVertical: 20,
+  },
+  btnQuotizate: {
+    backgroundColor: '#2e70e2',
+    padding: 10,
+    marginTop: 20,
+  },
+  txtQuotizate: {
+    color: '#FFF',
+    fontFamily: 'Lato-Black',
+    fontSize: 18,
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
 });
 
