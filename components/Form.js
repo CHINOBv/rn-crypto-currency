@@ -4,9 +4,7 @@ import {StyleSheet, View, Text, TouchableHighlight, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Axios from 'axios';
 
-const Form = () => {
-  const [Currency, setCurrency] = useState('');
-  const [Crypto, setCrypto] = useState('');
+const Form = ({Currency, Crypto, setCrypto, setCurrency, setFetchAPI}) => {
   const [Cryptos, setCryptos] = useState([]);
 
   const getCurrency = (currency) => {
@@ -34,6 +32,8 @@ const Form = () => {
       );
       return;
     }
+
+    setFetchAPI(true);
   };
 
   return (
