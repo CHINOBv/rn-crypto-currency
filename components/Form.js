@@ -82,9 +82,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   btnQuotizate: {
-    backgroundColor: '#2e70e2',
-    padding: 10,
+    backgroundColor: '#2e49e2',
+    padding: 14,
     marginTop: 20,
+    borderRadius: 19,
   },
   txtQuotizate: {
     color: '#FFF',

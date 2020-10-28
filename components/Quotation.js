@@ -39,9 +39,11 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#2e49e2',
-    marginTop: 20,
+    marginTop: 40,
     padding: 20,
     width: '100%',
+    borderTopEndRadius: 19,
+    borderTopStartRadius: 19,
   },
   price: {
     fontSize: 38,

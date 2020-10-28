@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, ScrollView, View, Text, Image} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 
 import Header from './components/Header';
 import Form from './components/Form';
@@ -12,6 +18,7 @@ const App = () => {
   const [Crypto, setCrypto] = useState('');
   const [FetchAPI, setFetchAPI] = useState(false);
   const [Response, setResponse] = useState({});
+  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
     const quotizateCrypto = async () => {
@@ -19,9 +26,14 @@ const App = () => {
         let url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${Crypto}&tsyms=${Currency}`;
         let res = await Axios.get(url);
 
-        setResponse(res.data.DISPLAY[Crypto][Currency]);
+        setLoading(true);
+
+        setTimeout(() => {
+          setResponse(res.data.DISPLAY[Crypto][Currency]);
+          setFetchAPI(false);
+          setLoading(false);
+        }, 3000);
       }
-      setFetchAPI(false);
     };
     quotizateCrypto();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +56,16 @@ const App = () => {
             setCrypto={setCrypto}
           />
         </View>
-        <Quotation Response={Response} />
+
+        {Loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#2e49e2"
+            style={{marginTop: 40}}
+          />
+        ) : (
+          <Quotation Response={Response} />
+        )}
       </ScrollView>
     </>
   );
