@@ -24,6 +24,7 @@ const App = () => {
       setFetchAPI(false);
     };
     quotizateCrypto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [FetchAPI]);
 
   return (
@@ -42,8 +43,8 @@ const App = () => {
             setCurrency={setCurrency}
             setCrypto={setCrypto}
           />
-          <Quotation Response={Response} />
         </View>
+        <Quotation Response={Response} />
       </ScrollView>
     </>
   );
